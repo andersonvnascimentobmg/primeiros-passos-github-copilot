@@ -38,6 +38,45 @@ activities = {
       "schedule": "Segundas, quartas e sextas, 14h - 15h",
       "max_participants": 30,
       "participants": ["john@mergington.edu", "olivia@mergington.edu"]
+   },
+   # Esportivas
+   "Futebol": {
+      "description": "Participe do time de futebol da escola e jogue campeonatos",
+      "schedule": "Terças e quintas, 16h - 17h30",
+      "max_participants": 22,
+      "participants": ["lucas@mergington.edu", "ana@mergington.edu"]
+   },
+   "Vôlei": {
+      "description": "Aulas e treinos de vôlei para todos os níveis",
+      "schedule": "Quartas e sextas, 15h - 16h30",
+      "max_participants": 18,
+      "participants": ["marcos@mergington.edu", "carla@mergington.edu"]
+   },
+   # Artísticas
+   "Teatro": {
+      "description": "Oficina de teatro e expressão corporal",
+      "schedule": "Segundas, 16h - 17h30",
+      "max_participants": 15,
+      "participants": ["juliana@mergington.edu", "rafael@mergington.edu"]
+   },
+   "Coral": {
+      "description": "Participe do coral da escola e aprenda técnicas vocais",
+      "schedule": "Quintas, 17h - 18h",
+      "max_participants": 25,
+      "participants": ["beatriz@mergington.edu", "gustavo@mergington.edu"]
+   },
+   # Intelectuais
+   "Clube de Leitura": {
+      "description": "Leitura e discussão de livros clássicos e contemporâneos",
+      "schedule": "Quartas, 16h - 17h",
+      "max_participants": 20,
+      "participants": ["lara@mergington.edu", "felipe@mergington.edu"]
+   },
+   "Olimpíada de Matemática": {
+      "description": "Preparação para olimpíadas de matemática e resolução de desafios",
+      "schedule": "Sábados, 10h - 12h",
+      "max_participants": 25,
+      "participants": ["carlos@mergington.edu", "marina@mergington.edu"]
    }
 }
 
@@ -60,6 +99,10 @@ def signup_for_activity(activity_name: str, email: str):
         raise HTTPException(status_code=404, detail="Atividade não encontrada")
 
     # Get the specificy activity
+    # Validar se o estudante já está inscrito
+    if email in activities[activity_name]["participants"]:
+        raise HTTPException(status_code=400, detail="Estudante já inscrito nesta atividade")
+    
     activity = activities[activity_name]
 
     # Add student
